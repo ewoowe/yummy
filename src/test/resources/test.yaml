@@ -1,8 +1,8 @@
 a:
   b:
-  - c: new3
-    d: new2
-  - c: new1
-    d: new2
+  - c: old
+    d: old
+  - c: old
+    d: old
   c:
-    d: new4
+    d: old
