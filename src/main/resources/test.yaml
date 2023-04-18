@@ -1,0 +1,8 @@
+a:
+  b:
+    - c: old
+      d: old
+    - c: old
+      d: old
+  c:
+    d: old

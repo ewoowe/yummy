@@ -1,0 +1,8 @@
+a:
+  b:
+  - c: new3
+    d: new2
+  - c: new1
+    d: new2
+  c:
+    d: new4
