@@ -16,7 +16,7 @@ public class Test {
         public String apply(String s) {
             String[] split = s.split("/");
             if (split.length != 2) {
-                throw new IllegalArgumentException("ip incorrect");
+                throw new IllegalArgumentException("ip incorrect " + s);
             }
             return ip + "/" + split[1];
         }
@@ -24,8 +24,8 @@ public class Test {
 
     public static void main(String[] args) {
         Yummy.set("test.yaml",
-                new String[]{"a.b[1].e", "a.b[0][1].d", "a.b[0].c", "a.c.d", "a.b[1].c"},
+                new String[]{"a.b[1].e", "a.b[0-2].d", "a.b[0].c", "a.c.d", "a.b[1].c"},
                 new Object[]{"new1", "new2", "new3", "new4", new IpSetter("192.168.39.200")},
-                true);
+                false);
     }
 }

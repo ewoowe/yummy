@@ -2,7 +2,7 @@ a:
   b:
   - c: old
     d: old
-  - c: old
+  - c: 192.168.1.30/24
     d: old
   c:
     d: old

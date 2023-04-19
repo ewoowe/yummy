@@ -82,7 +82,7 @@ public class Yummy {
                 if (node.isArray()) {
                     List<Object> list = new ArrayList<>();
                     for (Map.Entry<Integer, List<Node>> entry : node.getArrayChildren().entrySet())
-                        ensureList(list, entry.getKey());
+                        ensureList(list, entry.getKey() + 1);
                     ((Map<String, Object>) parent).put(node.getName(), list);
                     if (node.getFunctions() != null) {
                         for (Map.Entry<Integer, Function<Object, Object>> entry : node.getFunctions().entrySet()) {
@@ -94,7 +94,8 @@ public class Yummy {
                     if (arrayChildren != null) {
                         for (Map.Entry<Integer, List<Node>> entry : arrayChildren.entrySet()) {
                             Object o1 = list.get(entry.getKey());
-                            list.set(entry.getKey(), setMapValue(node.getName() + "[" + entry.getKey() + "]", o1, entry.getValue()));
+                            list.set(entry.getKey(), setMapValue(node.getName() + "[" + entry.getKey() + "]",
+                                    o1, entry.getValue()));
                         }
                     }
                 } else {
@@ -125,11 +126,12 @@ public class Yummy {
                                             ol.set(entry.getKey(), entry.getValue().apply(o1));
                                     } catch (IndexOutOfBoundsException ignore) {
                                         if (node.isAutoCreate()) {
-                                            ensureList(ol, entry.getKey());
+                                            ensureList(ol, entry.getKey() + 1);
                                             ol.set(entry.getKey(), entry.getValue().apply(null));
                                         } else {
                                             throw new YummyException(YummyExceptionEnum.KEY_NOT_EXIST,
-                                                    pname + "." + node.getName() + "[" + entry.getKey() + "]" + " out of index");
+                                                    pname + "." + node.getName() + "[" + entry.getKey()
+                                                            + "]" + " out of index");
                                         }
                                     }
                                 }
@@ -143,12 +145,13 @@ public class Yummy {
                                                 + "[" + entry.getKey() + "]", o1, entry.getValue()));
                                     } catch (IndexOutOfBoundsException ignore) {
                                         if (node.isAutoCreate()) {
-                                            ensureList(ol, entry.getKey());
+                                            ensureList(ol, entry.getKey() + 1);
                                             ol.set(entry.getKey(), setMapValue(pname + "." + node.getName()
-                                                    + "[" + entry.getKey() + "]", ol, entry.getValue()));
+                                                    + "[" + entry.getKey() + "]", ol.get(entry.getKey()), entry.getValue()));
                                         } else {
                                             throw new YummyException(YummyExceptionEnum.KEY_NOT_EXIST,
-                                                    pname + "." + node.getName() + "[" + entry.getKey() + "]" + " out of index");
+                                                    pname + "." + node.getName() + "[" + entry.getKey()
+                                                            + "]" + " out of index");
                                         }
                                     }
                                 }
@@ -169,7 +172,7 @@ public class Yummy {
                         if (node.isArray()) {
                             List<Object> list = new ArrayList<>();
                             for (Map.Entry<Integer, List<Node>> entry : node.getArrayChildren().entrySet())
-                                ensureList(list, entry.getKey());
+                                ensureList(list, entry.getKey() + 1);
                             ((Map<String, Object>) parent).put(node.getName(), list);
                             if (node.getFunctions() != null) {
                                 for (Map.Entry<Integer, Function<Object, Object>> entry : node.getFunctions().entrySet()) {
@@ -181,8 +184,8 @@ public class Yummy {
                             if (arrayChildren != null) {
                                 for (Map.Entry<Integer, List<Node>> entry : arrayChildren.entrySet()) {
                                     Object o1 = list.get(entry.getKey());
-                                    list.set(entry.getKey(), setMapValue(pname + "." + node.getName() + "[" + entry.getKey()
-                                            + "]", o1, entry.getValue()));
+                                    list.set(entry.getKey(), setMapValue(pname + "." + node.getName()
+                                            + "[" + entry.getKey() + "]", o1, entry.getValue()));
                                 }
                             }
                         } else {
@@ -191,7 +194,8 @@ public class Yummy {
                                 ((Map<String, Object>) parent).put(node.getName(), node.getFunction()
                                         .apply(((Map<String, Object>) parent).get(node.getName())));
                             if (node.getChildren() != null)
-                                ((Map<String, Object>) parent).put(node.getName(), setMapValue(pname + "." + node.getName(),
+                                ((Map<String, Object>) parent).put(node.getName(),
+                                        setMapValue(pname + "." + node.getName(),
                                         ((Map<String, Object>) parent).get(node.getName()), node.getChildren()));
                         }
                     }
@@ -220,7 +224,7 @@ public class Yummy {
                                     ol.set(entry.getKey(), entry.getValue().apply(o1));
                             } catch (IndexOutOfBoundsException ignore) {
                                 if (node.isAutoCreate()) {
-                                    ensureList(ol, entry.getKey());
+                                    ensureList(ol, entry.getKey() + 1);
                                     ol.set(entry.getKey(), entry.getValue().apply(null));
                                 } else {
                                     throw new YummyException(YummyExceptionEnum.KEY_NOT_EXIST,
@@ -234,11 +238,13 @@ public class Yummy {
                         for (Map.Entry<Integer, List<Node>> entry : arrayChildren.entrySet()) {
                             try {
                                 Object o1 = ol.get(entry.getKey());
-                                ol.set(entry.getKey(), setMapValue(node.getName() + "[" + entry.getKey() + "]", o1, entry.getValue()));
+                                ol.set(entry.getKey(), setMapValue(node.getName() + "[" + entry.getKey() + "]",
+                                        o1, entry.getValue()));
                             } catch (IndexOutOfBoundsException ignore) {
                                 if (node.isAutoCreate()) {
-                                    ensureList(ol, entry.getKey());
-                                    ol.set(entry.getKey(), setMapValue(node.getName() + "[" + entry.getKey() + "]", ol, entry.getValue()));
+                                    ensureList(ol, entry.getKey() + 1);
+                                    ol.set(entry.getKey(), setMapValue(node.getName() + "[" + entry.getKey() + "]",
+                                            ol.get(entry.getKey()), entry.getValue()));
                                 } else {
                                     throw new YummyException(YummyExceptionEnum.KEY_NOT_EXIST,
                                             node.getName() + "[" + entry.getKey() + "]" + " out of index");
@@ -261,7 +267,7 @@ public class Yummy {
                 if (node.isArray()) {
                     List<Object> list = new ArrayList<>();
                     for (Map.Entry<Integer, List<Node>> entry : node.getArrayChildren().entrySet())
-                        ensureList(list, entry.getKey());
+                        ensureList(list, entry.getKey() + 1);
                     map.put(node.getName(), list);
                     if (node.getFunctions() != null) {
                         for (Map.Entry<Integer, Function<Object, Object>> entry : node.getFunctions().entrySet()) {
@@ -273,7 +279,8 @@ public class Yummy {
                     if (arrayChildren != null) {
                         for (Map.Entry<Integer, List<Node>> entry : arrayChildren.entrySet()) {
                             Object o1 = list.get(entry.getKey());
-                            list.set(entry.getKey(), setMapValue(node.getName() + "[" + entry.getKey() + "]", o1, entry.getValue()));
+                            list.set(entry.getKey(), setMapValue(node.getName() + "[" + entry.getKey() + "]",
+                                    o1, entry.getValue()));
                         }
                     }
                 } else {
@@ -309,6 +316,8 @@ public class Yummy {
     private static List<Integer> getArrayNode(String name, int indexStart) throws YummyException {
         int i = name.indexOf("[", indexStart);
         int j = name.indexOf("]", indexStart);
+        if (i > j)
+            throw new YummyException(YummyExceptionEnum.ILLEGAL_ARGUMENTS, name + " invalid");
         if (i != -1 && j != -1) {
             List<Integer> list = new ArrayList<>();
             String substring = name.substring(i + 1, j);
@@ -316,8 +325,17 @@ public class Yummy {
                 String[] split = substring.split("-");
                 if (split.length != 1 && split.length != 2)
                     throw new YummyException(YummyExceptionEnum.ILLEGAL_ARGUMENTS, name + " array index invalid");
-                int index = Integer.parseInt(substring);
-                list.add(index);
+                if (split.length == 1) {
+                    int index = Integer.parseInt(substring);
+                    list.add(index);
+                } else {
+                    int i1 = Integer.parseInt(split[0]);
+                    int i2 = Integer.parseInt(split[1]);
+                    if (i1 >= i2)
+                        throw new YummyException(YummyExceptionEnum.ILLEGAL_ARGUMENTS, name + " invalid");
+                    for (int k = i1; k <= i2; k++)
+                        list.add(k);
+                }
                 List<Integer> arrayNode = getArrayNode(name, j + 1);
                 if (arrayNode != null)
                     list.addAll(arrayNode);
@@ -369,7 +387,8 @@ public class Yummy {
     }
 
     @SuppressWarnings("unchecked")
-    private static void parseNodes2(Node node, int arrayIndex, int nameIndex, String[] names, Object value, boolean autoCreated) throws YummyException {
+    private static void parseNodes2(Node node, int arrayIndex, int nameIndex, String[] names,
+                                    Object value, boolean autoCreated) throws YummyException {
         if (nameIndex == names.length) {
             if (arrayIndex != -1) {
                 if (value instanceof Function) {
