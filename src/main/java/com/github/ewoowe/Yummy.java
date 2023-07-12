@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 
+@SuppressWarnings("DuplicatedCode")
 public class Yummy {
 
     /**
@@ -311,14 +312,14 @@ public class Yummy {
      * @param name original name
      * @param indexStart start index
      * @return array index, if not an array node, return null
-     * @throws YummyException
+     * @throws YummyException YummyException
      */
     private static List<Integer> getArrayNode(String name, int indexStart) throws YummyException {
         int i = name.indexOf("[", indexStart);
         int j = name.indexOf("]", indexStart);
         if (i > j)
             throw new YummyException(YummyExceptionEnum.ILLEGAL_ARGUMENTS, name + " invalid");
-        if (i != -1 && j != -1) {
+        if (i != -1) {
             List<Integer> list = new ArrayList<>();
             String substring = name.substring(i + 1, j);
             try {
@@ -355,7 +356,7 @@ public class Yummy {
      * @param values values
      * @param autoCreate whether auto create
      * @return node list
-     * @throws YummyException
+     * @throws YummyException YummyException
      */
     private static List<Node> parseNodes(String[] paths, Object[] values, boolean autoCreate) throws YummyException {
         List<Node> roots = new ArrayList<>();
